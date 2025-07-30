@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anemia Predictor Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f8f9fa;
+    }
+    .container {
+      margin-top: 30px;
+    }
+    .hero-section {
+      background-color: #fff3cd;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .result-box {
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .result-box span {
+      font-size: 1.2rem;
+    }
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="hero-section">
+    <h1 class="mb-3">🩺 Anemia Risk Predictor</h1>
+    <p>Enter your details to assess the risk of anemia using AI.</p>
+  </div>
+
+  <form method="POST" class="mt-5 bg-white p-4 rounded shadow-sm">
+    <div class="mb-3">
+      <label for="gender" class="form-label">Gender</label>
+      <select class="form-select" id="gender" name="gender" required>
+        <option value="">-- Select Gender --</option>
+        <option value="0" {% if user_input.gender == 0 %}selected{% endif %}>Female</option>
+        <option value="1" {% if user_input.gender == 1 %}selected{% endif %}>Male</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="hemoglobin" class="form-label">Hemoglobin Level (g/dL)</label>
+      <input type="number" step="0.1" class="form-control" id="hemoglobin" name="hemoglobin" placeholder="Enter hemoglobin value (e.g., 13.5)" required value="{{ user_input.hemoglobin or '' }}">
+    </div>
+
+    <button type="submit" class="btn btn-danger w-100">Predict Risk</button>
+  </form>
+
+  {% if prediction_text %}
+  <div class="result-box bg-light border mt-4">
+    <h4>Prediction Result:</h4>
+    <span>{{ prediction_text|safe }}</span>
+  </div>
+  {% endif %}
+
+  <div class="mt-4">
+    <a href="https://www.who.int/news-room/fact-sheets/detail/anaemia" target="_blank" class="btn btn-outline-info w-100">🧠 Learn More About Anemia</a>
+  </div>
+
+  <div class="footer mt-5">
+    &copy; 2025 Anemia Predictor | Built with ❤️ by AI
+  </div>
+</div>
+
+</body>
+</html>
